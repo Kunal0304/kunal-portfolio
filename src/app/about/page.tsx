@@ -19,7 +19,6 @@ export async function generateMetadata() {
   const title = about.title;
   const description = about.description;
   const ogImage = `https://${baseURL}/og?title=${encodeURIComponent(title)}`;
-
   return {
     title,
     description,
@@ -287,32 +286,22 @@ export default function About() {
               </Heading>
               <Column fillWidth gap="l">
                 {about.technical.skills.map((skill, index) => (
-                  <Column key={`${skill}-${index}`} fillWidth gap="4">
-                    <Text variant="heading-strong-l">{skill.title}</Text>
-                    <Text variant="body-default-m" onBackground="neutral-weak">
-                      {skill.description}
-                    </Text>
-                    {skill.images && skill.images.length > 0 && (
-                      <Flex fillWidth paddingTop="m" gap="12" wrap>
-                        {skill.images.map((image, index) => (
-                          <Flex
-                            key={index}
-                            border="neutral-medium"
-                            radius="m"
-                            minWidth={image.width}
-                            height={image.height}
-                          >
-                            <SmartImage
-                              enlarge
-                              radius="m"
-                              sizes={image.width.toString()}
-                              alt={image.alt}
-                              src={image.src}
-                            />
-                          </Flex>
-                        ))}
+                  <Column key={`${skill.title}-${index}`} fillWidth gap="16">
+                    <Flex fillWidth horizontal="space-between" vertical="center" gap="16">
+                      <Flex gap="12" vertical="center">
+                        <Icon name={skill.icon} size="l" />
+                        <Text variant="heading-strong-l">{skill.title}</Text>
                       </Flex>
-                    )}
+                      <Text variant="body-default-m" onBackground="neutral-weak">
+                        {skill.progress}%
+                      </Text>
+                    </Flex>
+                    <div className={styles.progressBar}>
+                      <div 
+                        className={styles.progressFill} 
+                        style={{ width: `${skill.progress}%` }}
+                      />
+                    </div>
                   </Column>
                 ))}
               </Column>
